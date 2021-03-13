@@ -4,49 +4,88 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vue js cdn</title>
+    <title>Vue JS</title>
   </head>
   <body>
     <div id="app">
-      <btn-like></btn-like>
-      <btn-like></btn-like>
+      <counter></counter>
+      <br />
+      <todo-item
+        v-for="todo in todos"
+        v-bind:todo="todo"
+        v-bind:key="todo.id"
+      />
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script>
-      // local component
-      var local = {
-        template: `<button @click="increment">counter: {{counter}}</button>`,
-        data() {
+      // Declarative Rendering
+      Vue.component("counter", {
+        data: function () {
           return {
-            counter: 0,
+            count: 0,
           };
         },
+        template: `<button @click="incrementCounter">counter {{count}}</button>`,
         methods: {
-          increment() {
-            this.counter++;
+          incrementCounter() {
+            this.count += 1;
           },
         },
-      };
+        created() {
+          console.log("created method called");
+        },
+        mounted() {
+          console.log("mounted mehmod is called", this.$el.innerText);
+        },
+      });
 
-      // global component
-      // Vue.component('btn-like', {
-      //     template:`<button @click="increment">counter: {{counter}}</button>`,
-      //     data(){
-      //         return{
-      //             counter:0
-      //         }
-      //     },
-      //     methods:{
-      //         increment(){
-      //             this.counter++;
-      //         }
-      //     },
-      // })
+      Vue.component("todo-item", {
+        props: ["todo"],
+        template: `<div>{{todo.title}}</div>`,
+      });
 
       new Vue({
         el: "#app",
-        components: {
-          "btn-like": local,
+        data: {
+          todos: [
+            {
+              userId: 1,
+              id: 1,
+              title: "delectus aut autem",
+              completed: false,
+            },
+            {
+              userId: 1,
+              id: 2,
+              title: "quis ut nam facilis et officia qui",
+              completed: false,
+            },
+            {
+              userId: 1,
+              id: 3,
+              title: "fugiat veniam minus",
+              completed: false,
+            },
+            {
+              userId: 1,
+              id: 4,
+              title: "et porro tempora",
+              completed: true,
+            },
+            {
+              userId: 1,
+              id: 5,
+              title:
+                "laboriosam mollitia et enim quasi adipisci quia provident illum",
+              completed: false,
+            },
+            {
+              userId: 1,
+              id: 6,
+              title: "qui ullam ratione quibusdam voluptatem quia omnis",
+              completed: false,
+            },
+          ],
         },
       });
     </script>
