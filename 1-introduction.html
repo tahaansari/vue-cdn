@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction</title>
+  </head>
+  <body>
+    <div id="app">
+      <template v-if="seen" v-bind:title="title">{{hello}}</template>
+      <button @click="upperHello">upper</button>
+      <button @click="seen = !seen">toggle</button>
+      <template v-for="technology in technologies">
+        <div>{{technology.skill}}</div>
+      </template>
+      <ul>
+        <todo-item
+          v-for="(todo,index) in todos"
+          :todo="todo"
+          :key="index"
+        ></todo-item>
+      </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script>
+      Vue.component("todo-item", {
+        props: ["todo"],
+        template: "<li>{{todo.title}}</li>",
+      });
+      new Vue({
+        el: "#app",
+        data: {
+          hello: "Hello World..",
+          title: "This is a title",
+          seen: true,
+          technologies: [
+            {
+              id: 1,
+              skill: "html",
+            },
+            {
+              id: 2,
+              skill: "css",
+            },
+            {
+              id: 3,
+              skill: "javascript",
+            },
+          ],
+          todos: [
+            {
+              userId: 1,
+              id: 1,
+              title: "delectus aut autem",
+              completed: false,
+            },
+            {
+              userId: 1,
+              id: 2,
+              title: "quis ut nam facilis et officia qui",
+              completed: false,
+            },
+            {
+              userId: 1,
+              id: 3,
+              title: "fugiat veniam minus",
+              completed: false,
+            },
+          ],
+        },
+        updated() {
+          console.log("component updated");
+        },
+        methods: {
+          upperHello() {
+            return (this.hello = this.hello.toUpperCase());
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
